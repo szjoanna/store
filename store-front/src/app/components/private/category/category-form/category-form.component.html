@@ -1,0 +1,4 @@
+<form *ngIf="category$ | async as category" [formGroup]="formGroup">
+    <formly-form [form]="formGroup" [model]='category' [fields]="fields"></formly-form>
+    <button (click)="save()" mat-flat-button color="primary">Zapisz</button>
+</form>

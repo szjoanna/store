@@ -1,0 +1,43 @@
+<a routerLink="/category/create" mat-flat-button color="primary">Nowa kategoria</a>
+<div *ngIf="category$ | async as categories" class="mat-elevation-z8">
+  <table mat-table [dataSource]="categories.content">
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>Edytuj</th>
+      <td mat-cell *matCellDef="let element">
+        <a routerLink="/category/edit/{{element.id}}" mat-flat-button color="primary">Edytuj</a>
+      </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Usuń</th>
+      <td mat-cell *matCellDef="let element">
+        <button (click)="delete(element.id)" mat-flat-button color="primary">Usuń</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[2, 5, 10, 20]"
+    showFirstLastButtons
+    [length]="categories.totalElements"
+    [pageSize]="categories.size"
+    (page)="changePage($event)"
+  ></mat-paginator>
+</div>

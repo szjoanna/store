@@ -1,0 +1,17 @@
+<a routerLink="/product/create" *ngIf="hasRole(currentUser$ | async, ['ROLE_ADMIN'])" mat-flat-button color="primary">Nowy produkt</a>
+<mat-form-field class="example-full-width">
+    <mat-label>Wyszukaj produkt</mat-label>
+    <input (input)="subjectAutoComplete.next($event.target.value)" type="text"
+          placeholder="A"
+          matInput
+          [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of autoComplete$ | async" [value]="option">
+      {{option}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<div *ngIf="product$ | async as products" class="mat-elevation-z8">
+  <app-products [products]="products" (page)="changePage($event)"></app-products>
+</div>
+

@@ -1,0 +1,11 @@
+<form [formGroup]="formGroup">
+  <formly-form [form]="formGroup" [fields]="fields"></formly-form>
+  <button
+    (click)="save()"
+    [disabled]="!formGroup.valid"
+    mat-flat-button
+    color="primary"
+  >
+    Zarejestruj
+  </button>
+</form>

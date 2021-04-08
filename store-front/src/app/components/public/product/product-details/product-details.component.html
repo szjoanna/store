@@ -1,0 +1,15 @@
+<div *ngIf="product$ | async as product">
+    <h2>Szczegóły produktu</h2>
+    <p>Nazwa: {{product.name}}</p>
+    <p>Opis: {{product.description}}</p>
+    <p>Cena: {{product.price}}</p>
+    <form [formGroup]="formGroup">
+        <mat-form-field appearance="fill">
+            <mat-label>Wpisz ilość</mat-label>
+            <input #quantity matInput placeholder="Wpisz ilość" formControlName="quantity" type="number" max="{{product.quantity}}" min="1" required>
+            <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+          </mat-form-field>
+          <p>Quantity: {{product.quantity}}</p>
+          <button [disabled]="!formGroup.valid"  mat-flat-button color="primary" (click)="buy(product.id, quantity.value)">Kup</button>
+    </form>
+</div>

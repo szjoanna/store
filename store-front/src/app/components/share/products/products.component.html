@@ -1,0 +1,70 @@
+<div *ngIf="products" class="mat-elevation-z8">
+    <table mat-table [dataSource]="products.content">
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <th id="id" mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th id="name" mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="description">
+        <th id="description" mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      </ng-container>
+
+       <!-- Weight Column -->
+       <ng-container matColumnDef="image">
+        <th id="image" mat-header-cell *matHeaderCellDef>Image</th>
+        <td mat-cell *matCellDef="let element">
+          <img src="{{element.imageUrl}}" alt="">
+        </td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="price">
+        <th id="price" mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="edit">
+        <th id="edit" mat-header-cell *matHeaderCellDef>Edytuj</th>
+        <td mat-cell *matCellDef="let element">
+          <a routerLink="/product/edit/{{element.id}}" mat-flat-button color="primary">Edytuj</a>
+        </td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="delete">
+        <th id="delete" mat-header-cell *matHeaderCellDef>Usuń</th>
+        <td mat-cell *matCellDef="let element">
+          <button (click)="delete(element.id)" mat-flat-button color="primary">Usuń</button>
+        </td>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="details">
+        <th id="details" mat-header-cell *matHeaderCellDef>Details</th>
+        <td mat-cell *matCellDef="let element">
+          <a routerLink="/product/details/{{element.id}}" mat-flat-button color="primary">Szczegóły</a>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  
+    <mat-paginator
+      [pageSizeOptions]="[2, 5, 10, 20]"
+      showFirstLastButtons
+      [length]="products.totalElements"
+      [pageSize]="products.size"
+      (page)="changePage($event)"
+    ></mat-paginator>
+  </div>
