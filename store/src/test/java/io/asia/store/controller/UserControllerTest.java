@@ -25,10 +25,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @TestPropertySource(locations = "classpath:application-test.yml")
 @ActiveProfiles("test")
 public class UserControllerTest {
@@ -45,6 +46,7 @@ public class UserControllerTest {
     @Autowired
     private UserMapper userMapper;
 
+    @Transactional
     @Test
     void shouldSaveUser() throws Exception {
         UserDto userDto = UserDto.builder()
@@ -52,6 +54,7 @@ public class UserControllerTest {
                 .secondName("b")
                 .email("c")
                 .password("eA3*fgdsgfg")
+                .confirmPassword("eA3*fgdsgfg")
                 .build();
 
         mockMvc.perform(post("/api/users")
@@ -67,13 +70,14 @@ public class UserControllerTest {
 
     @Test
     void shouldSaveUserWithExistingEmail() throws Exception {
-        userRepository.save(User.builder().email("m@m.w").build());
+        userRepository.save(User.builder().email("m@m.m").build());
 
         UserDto userDto = UserDto.builder()
                 .firstName("a")
                 .secondName("b")
-                .email("m@m.w")
+                .email("m@m.m")
                 .password("eA3*fgdsgfg")
+                .confirmPassword("eA3*fgdsgfg")
                 .build();
 
         mockMvc.perform(post("/api/users")
@@ -82,6 +86,7 @@ public class UserControllerTest {
                 .andExpect(status().isConflict());
     }
 
+    @Transactional
     @Test
     void shouldNotSaveUserWithoutRequiredFields() throws Exception {
         UserDto userDto = UserDto.builder()
@@ -97,6 +102,7 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Transactional
     @WithMockUser(username = "m@m.w")
     @Test
     void shouldSaveUserWhenUserIsLogin() throws Exception {
@@ -133,6 +139,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.content", hasSize(1)));
     }
 
+    @Transactional
     @WithMockUser(roles = "USER")
     @Test
     void shouldGetPageUserWhenUserNotHaveRolesAdmin() throws Exception {
@@ -153,7 +160,7 @@ public class UserControllerTest {
     @Test
     void shouldFindUserById() throws Exception {
         User user = userRepository.save(User.builder()
-                .email("a")
+                .email("b")
                 .password("eA3*fgdsgfg")
                 .firstName("c")
                 .secondName("d")
@@ -163,6 +170,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Transactional
     @WithMockUser(roles = "ADMIN")
     @Test
     void shouldNotFindUserByIdWhenIdIsNotExisting() throws Exception {
@@ -170,6 +178,7 @@ public class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Transactional
     @WithMockUser(roles = "USER")
     @Test
     void shouldNotFindUserByIdWhenUserNotHaveRolesAdmin() throws Exception {
@@ -177,6 +186,7 @@ public class UserControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Transactional
     @WithMockUser(username = "m@m.w", roles = "ADMIN")
     @Test
     void shouldDeleteUserById() throws Exception {
@@ -191,6 +201,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Transactional
     @WithMockUser(username = "m@m.w", roles = "USER")
     @Test
     void shouldNotDeleteUserByIdWhenUserNotHasRolesAdmin() throws Exception {
@@ -211,6 +222,7 @@ public class UserControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Transactional
     @Test
     void shouldNotDeleteUserByIdWhenUserIsLogOut() throws Exception {
         User user = userRepository.save(User.builder()
@@ -249,6 +261,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.secondName").value(user.getSecondName()));
     }
 
+    @Transactional
     @WithMockUser(username = "m@m.w", roles = "USER")
     @Test
     void shouldNotUpdateUserHasNotRoleAdmin() throws Exception {
@@ -273,6 +286,7 @@ public class UserControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Transactional
     @WithMockUser(roles = "ADMIN")
     @Test
     void shouldNotUpdateUserWithoutRequiredFields() throws Exception {
@@ -290,6 +304,7 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Transactional
     @Test
     void shouldNotUpdateUserIfNotAuthenticatedAndNotAdmin() throws Exception {
         User user = userRepository.save(User.builder()
@@ -323,6 +338,7 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Transactional
     @Test
     void shouldNotGetCurrentUserWhenUserIsLogOut() throws Exception {
         User user = User.builder()
@@ -337,6 +353,7 @@ public class UserControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    @Transactional
     @Test
     void shouldGetCurrentUserWhenEmailIsNotExisting() throws Exception {
         mockMvc.perform(get("/api/users/current"))

@@ -1,13 +1,18 @@
 package io.asia.store.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.asia.store.domain.dto.LoginDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClaims;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -27,7 +32,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager, ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
         setAuthenticationManager(authenticationManager);
-        setUsernameParameter("email");
+        setFilterProcessesUrl("/api/login");
     }
 
     @Override
@@ -45,5 +50,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         objectMapper.writeValue(response.getWriter(), Collections.singletonMap("token", token));
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        if(!request.getMethod().equals(HttpMethod.POST.name())) {
+            throw new AuthenticationServiceException("login method not supported " + request.getMethod());
+        }
+        try {
+            LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+            return getAuthenticationManager().authenticate(token);
+        } catch (IOException e) {
+            throw new AuthenticationServiceException(e.getMessage());
+        }
     }
 }

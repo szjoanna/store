@@ -2,20 +2,19 @@ package io.asia.store.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
-@Builder
+@SuperBuilder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
-public class ProductDto {
+public class ProductDto extends AuditableDto{
     private Long id;
     @NotBlank
     private String name;
@@ -28,4 +27,5 @@ public class ProductDto {
     private Double quantity;
     private boolean deleted;
     private String imageUrl;
+    private Integer revisionNumber;
 }

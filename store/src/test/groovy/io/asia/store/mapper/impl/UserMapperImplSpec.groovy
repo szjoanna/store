@@ -2,6 +2,7 @@ package io.asia.store.mapper.impl
 
 import io.asia.store.domain.dao.User
 import io.asia.store.domain.dto.UserDto
+import io.asia.store.mapper.UserMapperImpl
 import spock.lang.Specification
 
 class UserMapperImplSpec extends Specification {

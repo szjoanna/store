@@ -2,17 +2,13 @@ package io.asia.store.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.asia.store.domain.dao.*;
-import io.asia.store.domain.dto.CategoryDto;
 import io.asia.store.mapper.UserOrderMapper;
 import io.asia.store.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,16 +17,15 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @TestPropertySource(locations = "classpath:application-test.yml")
 @ActiveProfiles("test")
 public class UserOrderControllerTest {

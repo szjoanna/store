@@ -1,6 +1,7 @@
 package io.asia.store.service.impl;
 
 import io.asia.store.domain.dao.Product;
+import io.asia.store.exception.UserNotLoggedException;
 import io.asia.store.repository.ProductRepository;
 import io.asia.store.service.CategoryService;
 import io.asia.store.service.ProductService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
@@ -63,12 +65,13 @@ public class ProductServiceImpl implements ProductService {
             if (userService.getCurrentUser().getRoles().removeIf(role -> "ROLE_ADMIN".equals(role.getName()))) {
                 return productRepository.findAll(pageable);
             }
-        } catch (EntityNotFoundException e) {
+        } catch (UserNotLoggedException e) {
             log.debug(e.getMessage());
         }
         return productRepository.findByMainAndDeleted(main, false, pageable);
     }
 
+    @Transactional
     @Override
     public Product update(Product product, Long id, Long categoryId) {
         Product productDB = findById(id);
@@ -77,7 +80,7 @@ public class ProductServiceImpl implements ProductService {
         productDB.setDescription(product.getDescription());
         productDB.setPrice(product.getPrice());
         productDB.setVersion(product.getVersion());
-        return productRepository.save(productDB);
+        return productDB;
     }
 
     @Override

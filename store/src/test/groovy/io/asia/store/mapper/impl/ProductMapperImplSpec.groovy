@@ -3,6 +3,7 @@ package io.asia.store.mapper.impl
 import io.asia.store.domain.dao.Category
 import io.asia.store.domain.dao.Product
 import io.asia.store.domain.dto.ProductDto
+import io.asia.store.mapper.ProductMapperImpl
 import spock.lang.Specification
 
 class ProductMapperImplSpec extends Specification {

@@ -3,26 +3,22 @@ package io.asia.store.domain.dao;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.IdentifiedDataSerializable;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import lombok.*;
+import org.hibernate.envers.Audited;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 
+@Audited
 @Builder
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Product implements IdentifiedDataSerializable {
+public class Product extends Auditable implements IdentifiedDataSerializable {
     @Id
     @GeneratedValue //    (strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,10 +30,7 @@ public class Product implements IdentifiedDataSerializable {
     private List<Product> listOfProducts;
     @Version
     private Long version;
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
+    @EqualsAndHashCode.Exclude
     @ManyToOne
     private Category category;
     private Double quantity;

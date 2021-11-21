@@ -2,6 +2,7 @@ package io.asia.store.mapper.impl
 
 import io.asia.store.domain.dao.Category
 import io.asia.store.domain.dto.CategoryDto
+import io.asia.store.mapper.CategoryMapperImpl
 import spock.lang.Specification
 
 class CategoryMapperImplSpec extends Specification {

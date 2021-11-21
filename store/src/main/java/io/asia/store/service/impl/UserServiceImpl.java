@@ -4,6 +4,7 @@ import io.asia.store.domain.dao.User;
 import io.asia.store.exception.UserNotLoggedException;
 import io.asia.store.repository.RoleRepository;
 import io.asia.store.repository.UserRepository;
+import io.asia.store.security.SecurityUtils;
 import io.asia.store.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -56,6 +57,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getCurrentUser() {
-        return userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow(UserNotLoggedException::new);
+        return userRepository.findByEmail(SecurityUtils.getCurrentUserEmail()).orElseThrow(UserNotLoggedException::new);
     }
 }

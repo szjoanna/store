@@ -2,9 +2,11 @@ package io.asia.store.mapper;
 
 import io.asia.store.domain.dao.Category;
 import io.asia.store.domain.dto.CategoryDto;
-import java.util.List;
+import org.mapstruct.Mapper;
 
-public interface CategoryMapper {
+import java.util.List;
+@Mapper(componentModel = "spring")
+public interface CategoryMapper extends BasicMapper<CategoryDto, Category> {
     Category toDao(CategoryDto categoryDto);
     CategoryDto toDto(Category category);
     List<CategoryDto> allToDto(List<Category> categories);

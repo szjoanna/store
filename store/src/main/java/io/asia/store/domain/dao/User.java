@@ -4,7 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -17,8 +21,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class User {
+@Audited
+public class User extends Auditable {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,13 +30,10 @@ public class User {
     private String secondName;
     @Column (unique = true)
     private String email;
+    @NotAudited
     private String password;
     @Version
     private Long version;
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     private List<Role> roles;
 }

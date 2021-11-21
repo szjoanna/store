@@ -16,16 +16,18 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Transactional
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+//@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @TestPropertySource(locations = "classpath:application-test.yml")
 @ActiveProfiles("test")
 public class CategoryControllerTest {
