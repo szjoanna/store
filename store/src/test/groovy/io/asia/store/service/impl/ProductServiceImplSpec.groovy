@@ -55,8 +55,6 @@ class ProductServiceImplSpec extends Specification {
                 .main(true)
                 .listOfProducts(Collections.emptyList())
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .category(null)
                 .quantity(2.0)
                 .imageUrl("image.png")
@@ -96,18 +94,6 @@ class ProductServiceImplSpec extends Specification {
         result != null
     }
 
-    def 'test update product'() {
-        given:
-        repository.findById(1) >> Optional.of(new Product())
-        categoryService.getById(1) >> new Category()
-
-        when:
-        productService.update(new Product(), 1, 1)
-
-        then:
-        1 * repository.save(_)
-    }
-
     def 'should not update product where product not in DB'() {
         given:
         repository.findById(1) >> Optional.empty()
@@ -132,8 +118,6 @@ class ProductServiceImplSpec extends Specification {
                 .email("a@a")
                 .password("abc")
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .roles(Arrays.asList(role))
                 .build()
         userService.getCurrentUser() >> user
@@ -161,8 +145,6 @@ class ProductServiceImplSpec extends Specification {
                 .email("a@a")
                 .password("abc")
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .roles(roles)
                 .build()
         userService.getCurrentUser() >> user
@@ -185,8 +167,6 @@ class ProductServiceImplSpec extends Specification {
                 .main(true)
                 .listOfProducts(Collections.emptyList())
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .category(null)
                 .quantity(2.0)
                 .imageUrl("image.png")

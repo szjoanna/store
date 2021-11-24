@@ -100,8 +100,6 @@ class CategoryServiceImplSpec extends Specification {
                 .id(1L)
                 .name("a")
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .build()
         repository.findAll() >> Collections.singletonList(category)
 

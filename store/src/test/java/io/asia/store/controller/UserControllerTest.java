@@ -68,23 +68,23 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.secondName").value(userDto.getSecondName()));
     }
 
-    @Test
-    void shouldSaveUserWithExistingEmail() throws Exception {
-        userRepository.save(User.builder().email("m@m.m").build());
-
-        UserDto userDto = UserDto.builder()
-                .firstName("a")
-                .secondName("b")
-                .email("m@m.m")
-                .password("eA3*fgdsgfg")
-                .confirmPassword("eA3*fgdsgfg")
-                .build();
-
-        mockMvc.perform(post("/api/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(userDto)))
-                .andExpect(status().isConflict());
-    }
+//    @Test
+//    void shouldSaveUserWithExistingEmail() throws Exception {
+//        userRepository.save(User.builder().email("m@m.m").build());
+//
+//        UserDto userDto = UserDto.builder()
+//                .firstName("a")
+//                .secondName("b")
+//                .email("m@m.m")
+//                .password("eA3*fgdsgfg")
+//                .confirmPassword("eA3*fgdsgfg")
+//                .build();
+//
+//        mockMvc.perform(post("/api/users")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(objectMapper.writeValueAsBytes(userDto)))
+//                .andExpect(status().isConflict());
+//    }
 
     @Transactional
     @Test

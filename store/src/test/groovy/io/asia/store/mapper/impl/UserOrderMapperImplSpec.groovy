@@ -40,8 +40,6 @@ class UserOrderMapperImplSpec extends Specification {
                 .main(true)
                 .listOfProducts(Collections.emptyList())
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .category(null)
                 .quantity(6.0)
                 .imageUrl("image_test")

@@ -38,8 +38,6 @@ class UserMapperImplSpec extends Specification {
                 .email("c")
                 .password("d")
                 .version(2L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .roles(Collections.emptyList())
                 .build()
 

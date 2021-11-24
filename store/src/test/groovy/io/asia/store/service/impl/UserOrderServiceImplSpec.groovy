@@ -1,15 +1,9 @@
 package io.asia.store.service.impl
 
-import io.asia.store.domain.dao.Basket
-import io.asia.store.domain.dao.Category
-import io.asia.store.domain.dao.Product
-import io.asia.store.domain.dao.User
-import io.asia.store.domain.dao.UserOrder
+import io.asia.store.domain.dao.*
 import io.asia.store.repository.UserOrderRepository
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 import spock.lang.Specification
 
 class UserOrderServiceImplSpec extends Specification {
@@ -64,8 +58,6 @@ class UserOrderServiceImplSpec extends Specification {
                 .main(true)
                 .listOfProducts(Collections.emptyList())
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .category(null)
                 .quantity(2.0)
                 .imageUrl("image_test")
@@ -94,8 +86,6 @@ class UserOrderServiceImplSpec extends Specification {
                 .id(1L)
                 .name("a")
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .build()
         def product = Product.builder()
                 .id(1L)
@@ -105,8 +95,6 @@ class UserOrderServiceImplSpec extends Specification {
                 .main(true)
                 .listOfProducts(Collections.emptyList())
                 .version(1L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .category(category)
                 .quantity(2.0)
                 .imageUrl("image_test")

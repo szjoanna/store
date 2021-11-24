@@ -375,10 +375,11 @@ public class ProductControllerTest {
                 .build();
         InputStream file = getClass().getClassLoader().getResourceAsStream("assets/avatar.jpg");
         MockMultipartFile fileUpload = new MockMultipartFile("file", "avatar.jpg", MediaType.IMAGE_JPEG_VALUE, file);
+        MockMultipartFile requestProductDto = new MockMultipartFile("productDto", "", MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(productDto));
 
         mockMvc.perform(multipart("/api/products")
                 .file(fileUpload)
-                .queryParam("productDto", objectMapper.writeValueAsString(productDto))
+                .file(requestProductDto)
                 .with(procesor -> {
                     procesor.setMethod("POST");
                     return procesor;
@@ -408,10 +409,11 @@ public class ProductControllerTest {
                 .build();
         InputStream file = getClass().getClassLoader().getResourceAsStream("assets/avatar.jpg");
         MockMultipartFile fileUpload = new MockMultipartFile("file", "avatar.jpg", MediaType.IMAGE_JPEG_VALUE, file);
+        MockMultipartFile requestProductDto = new MockMultipartFile("productDto", "", MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(productDto));
 
         mockMvc.perform(multipart("/api/products")
                 .file(fileUpload)
-                .queryParam("productDto", objectMapper.writeValueAsString(productDto))
+                .file(requestProductDto)
                 .with(procesor -> {
                     procesor.setMethod("POST");
                     return procesor;

@@ -30,8 +30,6 @@ class CategoryMapperImplSpec extends Specification {
                 .id(1L)
                 .name("a")
                 .version(2L)
-                .createdDate(null)
-                .lastModifiedDate(null)
                 .build()
 
         when:
