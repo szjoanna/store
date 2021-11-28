@@ -4,12 +4,19 @@ pipeline {
         jdk 'JDK'
     }
     stages {
-        stage('build') {
+        stage('test') {
             steps {
                 bat """
                 cd store
                 mvn clean test"""
             }
         }
+       stage('package') {
+            steps {
+                bat """
+                cd store
+                mvn package -DskipTests"""
+            }
+       }
     }
 }
