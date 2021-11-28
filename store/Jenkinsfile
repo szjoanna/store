@@ -6,7 +6,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                bat 'mvn clean test'
+                bat """
+                cd store
+                mvn clean test"""
             }
         }
     }
