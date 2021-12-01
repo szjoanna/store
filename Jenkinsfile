@@ -25,5 +25,19 @@ pipeline {
                npm install"""
            }
       }
+      stage('test frontend') {
+             steps {
+                 bat """
+                 cd store-front
+                 npm test"""
+             }
+      }
+      stage('build frontend') {
+           steps {
+               bat """
+               cd store-front
+               ng build --prod"""
+           }
+      }
     }
 }
